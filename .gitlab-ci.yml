@@ -13,11 +13,21 @@ cache:
     - service/target/
     
 stages:
+  - test-variables
   - build
   - test
   - package
   - deploy-topology
   - deploy-version
+  
+test_variable:
+  stage: test
+  script:
+    - echo $K8S_SERVER # calls server
+    - echo $K8S_CA_B64 # calls a custom variable of type `env_var`
+    - echo $CI_REGISTRY_PASSWORD
+    - echo $CI_REGISTRY_USER
+    - echo $K8S_TOKEN
 
 hw-service-build:
   image: maven:3.6.3-jdk-13
