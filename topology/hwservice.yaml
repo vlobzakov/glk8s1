@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: BRANCH_NAME
-  name: hwservice
+  name: hwservice1
 spec:
   replicas: 1 
   selector:
     matchLabels:
-      app: hwservice
+      app: hwservice1
   template:
     metadata:
       labels:
-        app: hwservice
+        app: hwservice1
     spec:
       containers:
-        - name: hwservice
-          image: ${REGISTRY_HOST}:${REGISTRY_PORT}/root/glk8s/hwservice:${CI_COMMIT_REF_NAME}-${CI_PIPELINE_ID}
+        - name: hwservice1
+          image: ${REGISTRY_HOST}:${REGISTRY_PORT}/root/glk8s/hwservice1:${CI_COMMIT_REF_NAME}-${CI_PIPELINE_ID}
           ports:
             - containerPort: 8080
             
@@ -25,10 +25,10 @@ kind: Service
 apiVersion: v1
 metadata:
   namespace: BRANCH_NAME
-  name: hwservice
+  name: hwservice1
 spec:
   selector:
-    app: hwservice
+    app: hwservice1
   ports:
     - name: service
       port: 8080
