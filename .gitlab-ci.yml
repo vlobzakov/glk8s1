@@ -5,7 +5,7 @@ services:
 variables:
   SPRING_PROFILES_ACTIVE: gitlab-ci
   DOCKER_DRIVER: overlay2
-  CI_REGISTRY_IMAGE: ${REGISTRY_HOST}:${REGISTRY_PORT}/root/glk8s/hwservice:${CI_COMMIT_REF_NAME}-${CI_PIPELINE_ID}
+  CI_REGISTRY_IMAGE: ${REGISTRY_HOST}:${REGISTRY_PORT}/root/glk8s/hwservice1:${CI_COMMIT_REF_NAME}-${CI_PIPELINE_ID}
 
 cache:
   paths:
@@ -71,7 +71,7 @@ deploy-topology:
       kubectl config use-context default;
       sed -i "s/BRANCH_NAME/$CI_COMMIT_REF_NAME/g" topology/*.yaml;
       kubectl apply -f topology/namespace.yaml;
-      kubectl apply -f topology/hwservice.yaml;
+      kubectl apply -f topology/hwservice1.yaml;
   only:
     changes:
       - topology/**/*
@@ -88,7 +88,7 @@ deploy-service:
         kubectl config set-credentials gitlab --token="${K8S_TOKEN}"
         kubectl config set-context default --cluster=k8s --user=gitlab
         kubectl config use-context default
-        kubectl set image deployment hwservice hwservice=${CI_REGISTRY_IMAGE} -n ${CI_COMMIT_REF_NAME}
+        kubectl set image deployment hwservice1 hwservice1=${CI_REGISTRY_IMAGE} -n ${CI_COMMIT_REF_NAME}
         echo "HW Service Deployment Compleated, version:" ${CI_REGISTRY_IMAGE}
 
   only:
